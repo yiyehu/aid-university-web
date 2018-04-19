@@ -4,13 +4,43 @@ $(function () {
         datatype: "json",
         colModel: [			
 			{ label: 'orderId', name: 'orderId', index: 'order_id', width: 50, key: true },
-			{ label: '商品ID', name: 'goodsId', index: 'goods_id', width: 80 }, 			
-			{ label: '评价ID', name: 'commentId', index: 'comment_id', width: 80 }, 			
-			{ label: '用户ID', name: 'userId', index: 'user_id', width: 80 }, 			
-			{ label: '订单时间', name: '订单时间', index: '订单时间', width: 80 }, 			
-			{ label: '是否评价', name: 'isComment', index: 'is_comment', width: 80 }, 			
-			{ label: '订单状态', name: 'status', index: 'status', width: 80 }, 			
-			{ label: '备注', name: 'remark', index: 'remark', width: 80 }			
+			{ label: '收货人姓名', name: 'userName', index: 'user_name', width: 80 },
+			{ label: '商品ID', name: 'goodsId', index: 'goods_id', width: 80 ,hidden:true},
+			{ label: '评价ID', name: 'commentId', index: 'comment_id', width: 80 ,hidden:true}, 			
+			{ label: '收货地址ID', name: 'addressId', index: 'address_id', width: 80,hidden:true}, 			
+			{ label: '用户ID', name: 'userId', index: 'user_id', width: 80 ,hidden:true}, 			
+			{ label: '是否评价', name: 'isComment', index: 'is_comment', width: 80 ,formatter:function(item, index){
+				return item == 0 ? '<span class="badge bg-red">未评价</span>' : 
+							item == 1 ? '<span class="badge bg-green">已评价</span>' : '未知';
+			}}, 			
+			{ label: '订单状态', name: 'status', index: 'status', width: 80 ,formatter:function(item, index){
+				return item == 0 ? '待确认' : 
+							item == 1 ? '待付款' : 
+								item == 2 ? '待发货' : 
+									item == 3 ? '待收货' : 
+										item == 4 ? '待评价' : 
+											item == 5 ? '交易成功' : 
+												item == 6 ? '退款申请中' : 
+													item == 7 ? '退款成功' : 
+														item == 8 ? '交易关闭' : '未知';
+			}},
+			{ label: '下单时间', name: 'createTime', index: 'create_time', width: 80 }, 			
+			{ label: '备注', name: 'remark', index: 'remark', width: 80 }, 			
+			{ label: '商品金额', name: 'goodsMoney', index: 'goods_money', width: 80 }, 			
+			{ label: '收货方式', name: 'deliverType', index: 'deliver_type', width: 80 }, 			
+			{ label: '快递费用', name: 'deliverMoney', index: 'deliver_money', width: 80 }, 			
+			{ label: '订单总金额', name: 'totalMoney', index: 'total_money', width: 80 }, 			
+			{ label: '实际订单总金额', name: 'realTotalMoney', index: 'real_total_money', width: 80 }, 			
+			{ label: '付费方式', name: 'paytype', index: 'payType', width: 80 ,formatter:function(item, index){
+				return item == 0 ? '<span class="badge badge bg-yellow">货到付款</span>' : 
+							item == 1 ? '<span class="badge badge bg-light-blue">网上支付</span>' : '未知';
+			}}, 			
+			{ label: '支付来源', name: 'payfrom', index: 'payFrom', width: 80 ,formatter:function(item, index){
+				return item == 0 ? '支付宝' : 
+							tem == 1 ? '微信' : '未知';
+			}},
+			{ label: '收货人地址', name: 'userAdress', index: 'user_adress', width: 80 }, 			
+			{ label: '收货人手机', name: 'userMobile', index: 'user_mobile', width: 80 }			
         ],
 		viewrecords: true,
         height: 385,

@@ -1,90 +1,135 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>订单</title>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="../../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../plugins/jqgrid/ui.jqgrid-bootstrap.css">
-    <link rel="stylesheet" href="../../plugins/ztree/css/metroStyle/metroStyle.css">
-    <link rel="stylesheet" href="../../css/main.css">
-    <script src="../../libs/jquery.min.js"></script>
-    <script src="../../plugins/layer/layer.js"></script>
-    <script src="../../libs/bootstrap.min.js"></script>
-    <script src="../../libs/vue.min.js"></script>
-    <script src="../../plugins/jqgrid/grid.locale-cn.js"></script>
-    <script src="../../plugins/jqgrid/jquery.jqGrid.min.js"></script>
-    <script src="../../plugins/ztree/jquery.ztree.all.min.js"></script>
-    <script src="../../js/common.js"></script>
-</head>
-<body>
-<div id="rrapp" v-cloak>
-    <div v-show="showList">
-        <div class="grid-btn">
-            <a v-if="hasPermission('app:order:save')" class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-            <a v-if="hasPermission('app:order:update')" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
-            <a v-if="hasPermission('app:order:delete')" class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
-        </div>
-        <table id="jqGrid"></table>
-        <div id="jqGridPager"></div>
-    </div>
 
-    <div v-show="!showList" class="panel panel-default">
-        <div class="panel-heading">{{title}}</div>
-        <form class="form-horizontal">
-                                                                            <div class="form-group">
-                        <div class="col-sm-2 control-label">商品ID</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="order.goodsId" placeholder="商品ID"/>
-                        </div>
-                    </div>
-                                                                <div class="form-group">
-                        <div class="col-sm-2 control-label">评价ID</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="order.commentId" placeholder="评价ID"/>
-                        </div>
-                    </div>
-                                                                <div class="form-group">
-                        <div class="col-sm-2 control-label">用户ID</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="order.userId" placeholder="用户ID"/>
-                        </div>
-                    </div>
-                                                                <div class="form-group">
-                        <div class="col-sm-2 control-label">订单时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="order.订单时间" placeholder="订单时间"/>
-                        </div>
-                    </div>
-                                                                <div class="form-group">
-                        <div class="col-sm-2 control-label">是否评价</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="order.isComment" placeholder="是否评价"/>
-                        </div>
-                    </div>
-                                                                <div class="form-group">
-                        <div class="col-sm-2 control-label">订单状态</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="order.status" placeholder="订单状态"/>
-                        </div>
-                    </div>
-                                                                <div class="form-group">
-                        <div class="col-sm-2 control-label">备注</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="order.remark" placeholder="备注"/>
-                        </div>
-                    </div>
-                                        <div class="form-group">
-                <div class="col-sm-2 control-label"></div>
-                <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
-                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
-            </div>
-        </form>
-    </div>
-</div>
+	<head>
+		<title>订单</title>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="../../css/bootstrap.min.css">
+		<link rel="stylesheet" href="../../css/font-awesome.min.css">
+		<link rel="stylesheet" href="../../plugins/jqgrid/ui.jqgrid-bootstrap.css">
+		<link rel="stylesheet" href="../../plugins/ztree/css/metroStyle/metroStyle.css">
+		<link rel="stylesheet" href="../../css/main.css">
+		<script src="../../libs/jquery.min.js"></script>
+		<script src="../../plugins/layer/layer.js"></script>
+		<script src="../../libs/bootstrap.min.js"></script>
+		<script src="../../libs/vue.min.js"></script>
+		<script src="../../plugins/jqgrid/grid.locale-cn.js"></script>
+		<script src="../../plugins/jqgrid/jquery.jqGrid.min.js"></script>
+		<script src="../../plugins/ztree/jquery.ztree.all.min.js"></script>
+		<script src="../../js/common.js"></script>
+	</head>
 
-<script src="../../js/modules/app/order.js"></script>
-</body>
+	<body>
+		<div id="rrapp" v-cloak>
+			<div v-show="showList">
+				<div class="grid-btn">
+					<a v-if="hasPermission('app:order:save')" class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+					<a v-if="hasPermission('app:order:update')" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+					<a v-if="hasPermission('app:order:delete')" class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+				</div>
+				<table id="jqGrid"></table>
+				<div id="jqGridPager"></div>
+			</div>
+
+			<div v-show="!showList" class="panel panel-default">
+				<div class="panel-heading">{{title}}</div>
+				<form class="form-horizontal">
+					<div class="form-group">
+						<div class="col-sm-2 control-label">商品ID</div>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" v-model="order.goodsId" placeholder="商品ID" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2 control-label">收货地址ID</div>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" v-model="order.addressId" placeholder="收货地址ID" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2 control-label">用户ID</div>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" v-model="order.userId" placeholder="用户ID" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2 control-label">备注</div>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" v-model="order.remark" placeholder="备注" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2 control-label">商品金额</div>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" v-model="order.goodsMoney" placeholder="商品金额" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2 control-label">收货方式</div>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" v-model="order.deliverType" placeholder="收货方式" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2 control-label">快递费用</div>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" v-model="order.deliverMoney" placeholder="快递费用" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2 control-label">订单总金额</div>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" v-model="order.totalMoney" placeholder="订单总金额" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2 control-label">实际订单总金额</div>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" v-model="order.realTotalMoney" placeholder="实际订单总金额" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2 control-label">付费方式</div>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" v-model="order.paytype" placeholder="付费方式" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2 control-label">支付来源</div>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" v-model="order.payfrom" placeholder="支付来源" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2 control-label">收货人姓名</div>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" v-model="order.userName" placeholder="收货人姓名" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2 control-label">收货人地址</div>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" v-model="order.userAdress" placeholder="收货人地址" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2 control-label">收货人手机</div>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" v-model="order.userMobile" placeholder="收货人手机" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2 control-label"></div>
+						<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定" /> &nbsp;&nbsp;
+						<input type="button" class="btn btn-warning" @click="reload" value="返回" />
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<script src="../../js/modules/app/order.js"></script>
+	</body>
+
 </html>

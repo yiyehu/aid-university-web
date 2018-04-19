@@ -93,7 +93,7 @@ $(function() {
 						width: 120,
 						align: 'center',
 						formatter: function(item, index) {
-							return item == null ? '' : '<img style="height:70px;width:150px "src=' + item + '></i>';
+							return item == null ? '' : '<img style="height:70px;width:150px "src='+ baseURL + item + '></i>';
 						},
 					},
 					{

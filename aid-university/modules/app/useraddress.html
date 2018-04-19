@@ -37,12 +37,6 @@
 				<div class="panel-heading">{{title}}</div>
 				<form class="form-horizontal">
 					<div class="form-group">
-						<div class="col-sm-2 control-label">用户ID</div>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" v-model="userAddress.userId" placeholder="用户ID" />
-						</div>
-					</div>
-					<div class="form-group">
 						<div class="col-sm-2 control-label">选择用户ID</div>
 						<div class="col-sm-10">
 							<table id="userJqGrid"></table>
@@ -50,57 +44,10 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-sm-2 control-label">用户姓名</div>
+						<div class="col-sm-2 control-label">地址</div>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" v-model="userAddress.name" placeholder="用户姓名" />
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-2 control-label">省份ID</div>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" v-model="userAddress.provinceId" placeholder="省份ID" />
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-2 control-label">城市ID</div>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" v-model="userAddress.cityId" placeholder="城市ID" />
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-2 control-label">县区ID</div>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" v-model="userAddress.regionId" placeholder="县区ID" />
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-2 control-label">城镇ID</div>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" v-model="userAddress.townId" placeholder="城镇ID" />
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-2 control-label">省份名称</div>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" v-model="userAddress.provinceName" placeholder="省份名称" />
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-2 control-label">城市名称</div>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" v-model="userAddress.cityName" placeholder="城市名称" />
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-2 control-label">县区名称</div>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" v-model="userAddress.regionName" placeholder="县区名称" />
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-2 control-label">城镇名称</div>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" v-model="userAddress.townName" placeholder="城镇名称" />
+							<table id="provinceJqGrid"></table>
+							<div id="provinceJqGridPager"></div>
 						</div>
 					</div>
 					<div class="form-group">
@@ -124,7 +71,8 @@
 					<div class="form-group">
 						<div class="col-sm-2 control-label">是否为默认地址</div>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" v-model="userAddress.defaultAddr" placeholder="是否为默认地址" />
+
+						默认-><input type="radio" name="defaultAddr" v-for="(item,index) in list" :value="item.value" v-model="userAddress.defaultAddr"><-其他
 						</div>
 					</div>
 					<div class="form-group">

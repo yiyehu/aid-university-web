@@ -1,22 +1,11 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: baseURL + 'app/goods/list',
+        url: baseURL + 'app/carts/queryCarsInfoList',
         datatype: "json",
         colModel: [			
-			{ label: 'goodsId', name: 'goodsId', index: 'goods_id', width: 50, key: true },
+			{ label: 'cartId', name: 'cartId', index: 'cart_id', width: 50, key: true },
 			{ label: '用户ID', name: 'userId', index: 'user_id', width: 80 }, 			
-			{ label: '分类ID', name: 'categoryId', index: 'category_id', width: 80 }, 			
-			{ label: '商品名称', name: 'name', index: 'name', width: 80 }, 			
-			{ label: '价格', name: 'price', index: 'price', width: 80 }, 			
-			{ label: '新货价格', name: 'newprice', index: 'newprice', width: 80 }, 			
-			{ label: '状态', name: 'status', index: 'status', width: 80 ,formatter:function(item, index){
-				return item == 0 ? '<span class="badge bg-yellow">已创建</span>' : 
-							item == 1 ? '<span class="badge bg-green">上架中</span>' : 
-								item == 2 ? '<span class="badge bg-light-blue">已被购买</span>' : '未知';
-			}}, 			
-			{ label: '添加时间', name: 'addtime', index: 'addtime', width: 80 }, 			
-			{ label: '更新时间', name: 'updatetime', index: 'updatetime', width: 80 }, 			
-			{ label: '商品描述', name: 'description', index: 'description', width: 80 }			
+			{ label: '商品ID', name: 'goodsId', index: 'goods_id', width: 80 }			
         ],
 		viewrecords: true,
         height: 385,
@@ -28,7 +17,7 @@ $(function () {
         multiselect: true,
         pager: "#jqGridPager",
         jsonReader : {
-            root: "page.list",
+            root: "list",
             page: "page.currPage",
             total: "page.totalPage",
             records: "page.totalCount"
@@ -50,7 +39,7 @@ var vm = new Vue({
 	data:{
 		showList: true,
 		title: null,
-		goods: {}
+		carts: {}
 	},
 	methods: {
 		query: function () {
@@ -59,25 +48,25 @@ var vm = new Vue({
 		add: function(){
 			vm.showList = false;
 			vm.title = "新增";
-			vm.goods = {};
+			vm.carts = {};
 		},
 		update: function (event) {
-			var goodsId = getSelectedRow();
-			if(goodsId == null){
+			var cartId = getSelectedRow();
+			if(cartId == null){
 				return ;
 			}
 			vm.showList = false;
             vm.title = "修改";
             
-            vm.getInfo(goodsId)
+            vm.getInfo(cartId)
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.goods.goodsId == null ? "app/goods/save" : "app/goods/update";
+			var url = vm.carts.cartId == null ? "app/carts/save" : "app/carts/update";
 			$.ajax({
 				type: "POST",
 			    url: baseURL + url,
                 contentType: "application/json",
-			    data: JSON.stringify(vm.goods),
+			    data: JSON.stringify(vm.carts),
 			    success: function(r){
 			    	if(r.code === 0){
 						alert('操作成功', function(index){
@@ -90,17 +79,17 @@ var vm = new Vue({
 			});
 		},
 		del: function (event) {
-			var goodsIds = getSelectedRows();
-			if(goodsIds == null){
+			var cartIds = getSelectedRows();
+			if(cartIds == null){
 				return ;
 			}
 			
 			confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
-				    url: baseURL + "app/goods/delete",
+				    url: baseURL + "app/carts/delete",
                     contentType: "application/json",
-				    data: JSON.stringify(goodsIds),
+				    data: JSON.stringify(cartIds),
 				    success: function(r){
 						if(r.code == 0){
 							alert('操作成功', function(index){
@@ -113,9 +102,9 @@ var vm = new Vue({
 				});
 			});
 		},
-		getInfo: function(goodsId){
-			$.get(baseURL + "app/goods/info/"+goodsId, function(r){
-                vm.goods = r.goods;
+		getInfo: function(cartId){
+			$.get(baseURL + "app/carts/info/"+cartId, function(r){
+                vm.carts = r.carts;
             });
 		},
 		reload: function (event) {
