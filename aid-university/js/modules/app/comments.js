@@ -7,7 +7,8 @@ $(function () {
 			{ label: '评价内容', name: 'content', index: 'content', width: 80 }, 			
 			{ label: '星级', name: 'star', index: 'star', width: 80 }, 			
 			{ label: '是否匿名', name: 'isAnon', index: 'is_anon', width: 80 }, 			
-			{ label: '添加时间', name: 'createTime', index: 'create_time', width: 80 }			
+			{ label: '添加时间', name: 'createTime', index: 'create_time', width: 80 }, 			
+			{ label: '订单id', name: 'orderId', index: 'order_id', width: 80 }			
         ],
 		viewrecords: true,
         height: 385,
